@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Weather Page</title>
+
+  <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+
+  <link href="{{ url_for('static', filename='font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet'type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+    rel='stylesheet' type='text/css'>
+
+  <link href="{{ url_for('static', filename='clean-blog.min.css') }}" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="{{ url_for('index') }}">HOME</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+        data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fa fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('about') }}">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('add') }}">Add</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('blog') }}">What is Blogging</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('bot') }}">Ask anything here</a>
+        </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="masthead"
+    style="background-image: url('{{ url_for('static', filename='weather_new.jpeg') }}')">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1 span style="font-style: italic; fonr-size: 500px;color: black;">Live Weather Report</span></h1>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <br />
+  <br />
+  <center class="row">
+    <form method="post" class="col-md-6 col-md-offset-3">
+      <div class="input-group">
+        <input type="text" class="form-control" name="city" placeholder="Search">
+        <div class="input-group-btn">
+          <button class="btn btn-primary" type="submit">
+            <i class="glyphicon glyphicon-search">GO</i>
+          </button>
+        </div>
+      </div>
+    </form>
+  </center>
+  <div class="row">
+    {% if data.country_code and data.coordinate and data.temp and data.pressure and data.humidity %}
+    <div class="col-md-6 col-md-offset-3">
+      <h3>country code : <span style="font-style: italic; font-family: 'Your Font', sans-serif; font-size: 19px;">{{data.country_code}}</span></h3>
+      <h5>City name : <span style="font-style: italic; font-family: 'Your Font', sans-serif; font-size: 19px;">{{data.cityname}}</span> </h5>
+      <h5>Coordinate : <span style="font-style: italic; font-family: 'Your Font', sans-serif; font-size: 19px;">{{data.coordinate[7:]}}{{' °N '}}{{data.coordinate[0:6]}}{{' °E'}}</span></h5>
+      <h5>Temp (in kelvin) : <span style="font-style: italic; font-family: 'Your Font', sans-serif; font-size: 19px;">{{data.temp[:-1]}}{{' K'}}</span></h5>
+      <h5>Temp (in Celsius) : <span style="font-style: italic; font-family: 'Your Font', sans-serif; font-size: 19px;">{{ (data.temp[:-1]|float - 273.15)|round|int }}{{' C'}}</span></h5>
+      <h5>Pressure : <span style="font-style: italic; font-family: 'Your Font', sans-serif; font-size: 19px;">{{data.pressure}} {{'mb'}}</span> </h5>
+      <h5>Humidity : <span style="font-style: italic; font-family: 'Your Font', sans-serif; font-size: 19px;">{{data.humidity}} {{'%'}}</span></h5>
+    </div>
+    {% endif %}
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p class="copyright text-muted">Copyright &copy; Kaustubh Krishna 2023</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
